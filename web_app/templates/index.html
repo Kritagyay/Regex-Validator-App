@@ -1,221 +1,253 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Regex Matcher</title>
-    <style>
-      body {
-        background-color: #000;
-        color: #a9b7c6;
-        font-family: Arial, sans-serif;
+
+<head>
+  <title>Regex Matcher</title>
+  <style>
+    body {
+      background-color: #000;
+      height: 80vh;
+      margin: 0;
+      width: 100vw;
+      padding: 0;
+      color: #a9b7c6;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    .form_container {
+      color: white;
+      background-color: #1e1a1a;
+      border-radius: 1rem;
+      width: 40%;
+      padding-top: 0;
+      overflow: hidden;
+    }
+
+    .navbar_container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .nav_elem {
+      padding: 0.7rem;
+      width: 100%;
+      background-color: blue;
+      color: white;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .back_button {
+      background-color: black;
+      color: white;
+      padding: 14px 27px;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .back_button:hover {
+      background-color: #4e5d6c;
+    }
+
+    .btn_container {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .active {
+      background-color: white;
+      color: black;
+    }
+
+    .email_validator {
+      display: none;
+    }
+
+    .email_validator,
+    .string_validator {
+      padding: 1rem;
+    }
+
+    .result_container {
+      display: flex;
+      padding: 0.6rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+      height: 200px;
+      overflow-y: scroll;
+    }
+
+    .result_container>li {
+      background-color: #3c3f41;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      height: fit-content;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      background-color: #3c3f41;
+      color: #a9b7c6;
+      border: none;
+    }
+
+    input[type="submit"] {
+      background-color: blue;
+      color: white;
+      padding: 14px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #4e5d6c;
+    }
+
+    h2 {
+      color: #6a8759;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+      form {
+        margin: 10px;
       }
-      .container {
-        display: flex;
-        height: 100vh;
-        width: 100vw;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-      .form_container {
-        color: white;
-        background-color: #1e1a1a;
-        border-radius: 1rem;
-        width: 40%;
-        padding-top: 0;
-        overflow: hidden;
-      }
-      .navbar_container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-      }
-      .nav_elem {
-        padding: 0.7rem;
-        width: 100%;
-        background-color: blue;
-        color: white;
-        border: 0;
-        cursor: pointer;
-      }
-      .back_button {
-        background-color: black;
-        color: white;
-        padding: 14px 27px;
-        border: 0;
-        cursor: pointer;
-      }
-      .back_button:hover {
-        background-color: #4e5d6c;
-      }
-      .btn_container {
-        margin-top: 1rem;
-        text-align: center;
-      }
-      .active {
-        background-color: white;
-        color: black;
-      }
-      .email_validator {
-        display: none;
-      }
-      .email_validator,
-      .string_validator {
-        padding: 1rem;
-      }
+
       textarea,
       input[type="text"] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        background-color: #3c3f41;
-        color: #a9b7c6;
-        border: none;
+        padding: 6px 10px;
       }
+
       input[type="submit"] {
-        background-color: blue;
-        color: white;
-        padding: 14px 20px;
-        border: none;
-        cursor: pointer;
+        padding: 7px 10px;
       }
-      input[type="submit"]:hover {
-        background-color: #4e5d6c;
-      }
-      h2 {
-        color: #6a8759;
-      }
-      ul {
-        list-style-type: none;
-      }
-      /* Responsive styles */
-      @media only screen and (max-width: 600px) {
-        form {
-          margin: 10px;
-        }
-        textarea,
-        input[type="text"] {
-          padding: 6px 10px;
-        }
-        input[type="submit"] {
-          padding: 7px 10px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class="container">
-      <div class="form_container">
-        <nav class="navbar_container">
-          <button
-            typ="button"
-            id="string_btn"
-            class="nav_elem"
-            onclick="stringValidateForm()"
-          >
-            String Validation
-          </button>
-          <button
-            typ="button"
-            id="email_btn"
-            class="nav_elem"
-            onclick="emailValidateForm()"
-          >
-            Email Validation
-          </button>
-        </nav>
-        <section>
-          <div id="string_validator" class="string_validator">
-            <form method="POST" action="/results">
-              <label for="test_string">Test String:</label><br />
-              <textarea id="test_string" name="test_string" rows="4" required>
-{{ test_string }}</textarea
-              ><br />
-              <label for="regex">Regex:</label><br />
-              <input
-                type="text"
-                id="regex"
-                name="regex"
-                value="{{ regex }}"
-                required
-              /><br />
-              <div class="btn_container">
-                <input type="submit" value="Validate" />
-                <a href="{{ url_for('home') }}"
-                  ><button type="button" class="back_button">Back</button></a
-                >
-              </div>
-            </form>
-            {% if error %}
-            <p style="color: red">{{ error }}</p>
-            {% endif %} {% if test_string and regex %} {% if matches %}
-            <h2>Matches</h2>
-            <ul>
-              {% for match in matches %}
-              <li>{{ match }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            <p>No matches found.</p>
-            {% endif %} {% endif %}
-          </div>
-          <div id="email_validator" class="email_validator">
-            <form method="POST" action="/validate">
-              <label for="email">Email:</label><br />
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value="{{ email }}"
-              /><br />
-              <div class="btn_container">
-                <input type="submit" value="Validate" />
-                <a href="{{ url_for('home') }}"
-                  ><button type="button" class="back_button">Back</button></a
-                >
-              </div>
-            </form>
-            {% if valid %}
-            <h2>Valid Email</h2>
-            <p>The email {{ email }} is valid.</p>
-            {% elif invalid %}
-            <h2>Invalid Email</h2>
-            <p>The email {{ email }} is invalid.</p>
-            {% endif %}
-          </div>
-        </section>
-      </div>
-    </main>
-  </body>
-  <script>
-    const emailValidator = document.getElementById("email_validator");
-    const stringValidator = document.getElementById("string_validator");
-    const stringBtn = document.getElementById("string_btn");
-    const emailBtn = document.getElementById("email_btn");
+    }
+  </style>
+</head>
 
-    let isActive = "string_validator";
+<body>
+  <main class="container">
+    <div class="form_container">
+      <nav class="navbar_container">
+        <button typ="button" id="string_btn" class="nav_elem" onclick="stringValidateForm()">
+          String Validation
+        </button>
+        <button typ="button" id="email_btn" class="nav_elem" onclick="emailValidateForm()">
+          Email Validation
+        </button>
+      </nav>
+      <section>
+        <div id="string_validator" class="string_validator">
+          <form method="POST" action="/results">
+            <label for="test_string">Test String:</label><br />
+            <textarea id="test_string" name="test_string" rows="4" required>
+{{ test_string }}</textarea><br />
+            <label for="regex">Regex:</label><br />
+            <input type="text" id="regex" name="regex" value="{{ regex }}" required /><br />
+            <div class="btn_container">
+              <input type="submit" value="Validate" />
+              <a href="{{ url_for('home') }}"><button type="button" class="back_button">Back</button></a>
+            </div>
+          </form>
+          {% if error %}
+          <p style="color: red">{{ error }}</p>
+          {% endif %} {% if test_string and regex %} {% if matches %}
+          <h2>Matches</h2>
+          <!-- <div class="result_container"> -->
+          <ul class="result_container">
+            {% for match in matches %}
+            <li>{{ match }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No matches found.</p>
+          {% endif %} {% endif %}
+        </div>
+        <!-- </div> -->
+        <div id="email_validator" class="email_validator">
+          <form method="POST" action="/validate">
+            <label for="email">Email:</label><br />
+            <input type="text" id="email" name="email" value="{{ email }}" /><br />
+            <div class="btn_container">
+              <input type="submit" value="Validate" />
+              <a href="{{ url_for('home') }}"><button type="button" class="back_button">Back</button></a>
+            </div>
+          </form>
+          {% if valid %}
+          <h2>Valid Email</h2>
+          <p>The email {{ email }} is valid.</p>
+          {% elif invalid %}
+          <h2>Invalid Email</h2>
+          <p>The email {{ email }} is invalid.</p>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+<script>
+  const emailValidator = document.getElementById("email_validator");
+  const stringValidator = document.getElementById("string_validator");
+  const stringBtn = document.getElementById("string_btn");
+  const emailBtn = document.getElementById("email_btn");
 
+  let isActive = "string_validator";
+
+  stringBtn.classList.add("active");
+
+  function stringValidateForm() {
+    isActive = "string_validator";
+    stringValidator.style.display = "block";
     stringBtn.classList.add("active");
+    emailBtn.classList.remove("active");
+    emailValidator.style.display = "none";
+  }
 
-    function stringValidateForm() {
-      isActive = "string_validator";
-      stringValidator.style.display = "block";
-      stringBtn.classList.add("active");
-      emailBtn.classList.remove("active");
-      emailValidator.style.display = "none";
-    }
+  function emailValidateForm() {
+    isActive = "email_validator";
+    emailValidator.style.display = "block";
+    emailBtn.classList.add("active");
+    stringBtn.classList.remove("active");
+    stringValidator.style.display = "none";
+  }
 
-    function emailValidateForm() {
-      isActive = "email_validator";
-      emailValidator.style.display = "block";
-      emailBtn.classList.add("active");
-      stringBtn.classList.remove("active");
-      stringValidator.style.display = "none";
-    }
+  if (window.location.pathname === "/validate") {
+    emailValidateForm();
+  }
+</script>
 
-    if (window.location.pathname === "/validate") {
-      emailValidateForm();
-    }
-  </script>
 </html>
