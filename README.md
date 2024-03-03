@@ -45,6 +45,11 @@ For detailed deployment instructions and best practices, please refer to the doc
 **When the email id is passed.**
 
 ![image1](./images/4.png)
+
+## The AWS server deployed link
+
+http://54.166.124.24:5000/
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
